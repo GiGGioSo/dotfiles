@@ -1,0 +1,11 @@
+[
+    {
+        "keys": ["alt+c"],
+        "command": "exit_insert_mode",
+        "context":
+        [
+            { "key": "setting.command_mode", "operand": false }
+        ]
+    },
+    { "keys": ["ctrl+shift+s"], "command": "auto_save" }
+]

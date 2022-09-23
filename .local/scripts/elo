@@ -1,0 +1,17 @@
+#!/usr/bin/env python
+
+import requests
+
+text = requests.post("https://www.thecalculator.co/includes/forms/quotes_ajax.php").text
+
+start = text.find("size=") + len("size=\"4\">")
+end = text.find("\"", start + 3)
+
+quote = text[start:end+1]
+
+if quote[1] == " ":
+    quote = quote[0] + quote[2:]
+
+print("\n",quote, "- elo\n")
+
+print(" --- Remember elo loves you <3 ---\n")

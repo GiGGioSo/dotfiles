@@ -1,0 +1,160 @@
+#!/bin/sh
+
+#
+# COMMAND USAGE OPTIONS:
+#
+#	-h	Shows something like this
+# 	-p	Specify the image, it can either be the full path of an image, or just the name, which will be searched in the default wallpaper directory
+#	-i	Print path of the image currently in use
+#	-s	Set a specific preset
+
+# Load the config file #
+if [ -f "${HOME}/.config/wal_global/wal_global.conf" ]; then
+	source "${HOME}/.config/wal_global/wal_global.conf"
+	CONFIG_GOT_SOURCED="69"
+else
+	echo "Configuration file not found, create one at ${HOME}/.config/wal_global/wal_global.conf"
+	exit 1
+fi
+
+DEFAULT_DIR="${HOME}/wallpapers"
+IMG_PATH=""
+PRESET_USED=""
+
+apply_preset() {
+	if [ ${#PRESETS[${1}]} -eq 0 ]; then
+		echo "Error: The preset ${1} was not found."
+		exit 1
+	else
+		apply_image_path ${PRESETS[${1}]}
+		PRESET_USED=${1}
+	fi
+}
+
+apply_random_image_path() {
+	TMP_PATH=""
+	DIR=""
+	if [ $# -eq 0 ]; then
+		DIR=${DEFAULT_DIR}
+	else
+		if [ -d "$1" ]; then
+			DIR=${1}
+		else
+			echo "Error: The directory ${1} was not found."
+			exit 1
+		fi
+	fi
+	NUM_FILES=$(ls ${DIR} | wc -l)
+	RAND_NUM=$(shuf -i 1-${NUM_FILES} -n 1)
+	RAND_LEN=${#RAND_NUM}
+	if [ $RAND_LEN -lt 4 ]; then
+		TMP_LEN=$((4-$RAND_LEN))
+	        for (( i=1; i<=$TMP_LEN; i++ )); do
+			TMP_PATH="${TMP_PATH}0"
+		done
+		TMP_PATH="${TMP_PATH}${RAND_NUM}.jpg"
+	else
+		TMP_PATH="${RAND_NUM}.jpg"
+	fi
+	TMP_PATH="${DIR}/${TMP_PATH}"
+	IMG_PATH=$TMP_PATH
+}
+
+apply_image_path() {
+	if [ -f "$1" ]; then
+		IMG_PATH=$1	
+	else
+		echo "Error: The image ${1} was not found."
+		exit 1
+	fi
+}
+
+print_info_on_current_setup() {
+	if [ -f "${HOME}/.config/wal_global/current_img_path" ]; then
+		echo "The image in use is `cat $HOME/.config/wal_global/current_img_path`"
+		exit 0
+	else
+		echo "There's no information about the current image in use"
+		exit 1
+	fi
+}
+
+display_help_message() {
+	echo "
+	usage: wal_global [-h] [-i] [-r (path/to/directory)] [-p /path/to/image] [-s preset_name]
+
+	-h	Display this message
+
+	-i	Display info about last set image/preset
+
+	-r	Pick an image at random from the directory if specified
+
+	-p	Specify wich image to use, if only a filename is used, it will be searched inside the default directory
+
+	-s	Specify wich preset to use
+	 "
+}
+
+if [ $# -eq 0 ]; then
+	display_help_message
+	exit 1
+fi
+
+while getopts ":hir:p:s:" options; do
+	case "${options}" in
+		h)
+			display_help_message
+			exit 0
+			;;
+
+		i)
+			print_info_on_current_setup
+			;;
+
+		r)
+			apply_random_image_path ${OPTARG}
+			;;
+
+		p)
+			apply_image_path ${OPTARG}
+			;;
+
+		s)
+			apply_preset ${OPTARG}
+			;;
+
+		:)
+			if [ "$OPTARG" == "r" ];then
+				apply_random_image_path
+			else
+				echo "Error: -${OPTARG} requires an argument."
+				display_help_message
+				exit 1
+			fi
+			;;
+		*)
+			echo "Error: -${OPTARG} was never an option."
+			display_help_message
+			exit 1
+			;;
+	esac
+done
+
+if [ -f "$IMG_PATH" ]; then
+	wal -q -i "$IMG_PATH"
+	# slick-pywal
+	# apply_pywal_chrome
+	# qtile cmd-obj -o cmd -f restart
+	if [ -f "$HOME/.config/wal_global/current_img_path" ]; then
+		touch "$HOME/.config/wal_global/current_img_path"
+	fi
+	if [ -z $PRESET_USED ]; then
+		echo "$IMG_PATH" > "$HOME/.config/wal_global/current_img_path"
+	else
+		echo "$IMG_PATH from preset $PRESET_USED" > "$HOME/.config/wal_global/current_img_path"
+	fi
+	exit 0
+else
+	echo "The path $IMG_PATH does not exist."
+	exit 1
+fi

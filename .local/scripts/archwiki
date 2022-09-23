@@ -1,0 +1,7 @@
+#!/bin/sh
+
+DOCS_DIR="/usr/share/doc/arch-wiki/html/en/"
+
+DOC=`find $DOCS_DIR -type f | cut -c $((${#DOCS_DIR}+"1"))- | fzf`
+
+qutebrowser -l critical -R $DOCS_DIR$DOC &
