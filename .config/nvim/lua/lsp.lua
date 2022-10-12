@@ -155,3 +155,6 @@ lspconfig.sumneko_lua.setup({
 lspconfig.vimls.setup({})
 -- YAML language server
 lspconfig.yamlls.setup({})
+-- Scheme / Racket language server
+lspconfig.racket_langserver.setup({})
+

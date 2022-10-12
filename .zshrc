@@ -17,6 +17,11 @@ precmd_functions+=( precmd_vcs_info )
 
 zstyle ':vcs_info:git:*' formats ' %b%u%c'
 
+# Environment variables
+export EDITOR=nvim
+
+# Zsh options
+
 # Aliases
 alias ls='lsd'
 alias la='lsd -A'
@@ -26,12 +31,15 @@ alias tp='trash-put'
 alias tl='trash-list'
 alias rm='echo "Use the trashcan with tp (trash-put).\n\nIf you really want to use rm write a \\ before."; false'
 
+alias onesync='onedrive --synchronize'
+
 alias config='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
 
 # alias wg='wal_global'
 alias v='nvim'
 alias aw='archwiki'
-alias gpu='DRI_PRIME=1'
+# alias gpu='DRI_PRIME=1'
+# alias gpu='__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia'
 
 # Additions to PATH
 typeset -U path PATH
@@ -48,4 +56,3 @@ RPROMPT=''
 PROMPT='%B%F{red}%*%f %F{blue}%n%f%F{blue}:[%f%F{red}%~%f%F{blue}]%f %B%F{magenta}${vcs_info_msg_0_}%f${NEWLINE}%F{blue}%f%b '
 # PROMPT='%B%F{cyan}%n %F{red}%c > %F{white}'
 
-exec

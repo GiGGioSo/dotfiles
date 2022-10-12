@@ -71,12 +71,6 @@ colors = [
 def autostart():
     subprocess.call([f"{home}/.config/qtile/autostart.sh"])
 
-### Correct Touchpad WidgetBox state ### DOESNT 
-@hook.subscribe.restart
-def fix_touchpad_widget_box():
-    logger.warning("Non so perche non va")
-    lazy.spawn(f"{home}/.local/scripts/touchpad_toggle.sh on")
-
 keys = [
     # A list of available commands that can be bound to keys can be found
     # at https://docs.qtile.org/en/latest/manual/config/lazy.html
@@ -104,6 +98,7 @@ keys = [
     Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
+    Key([mod, "shift"], "b", lazy.hide_show_bar(), desc="Toggle the bar"),
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
     # Unsplit = 1 window displayed, like Max layout, but still with

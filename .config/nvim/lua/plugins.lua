@@ -3,6 +3,7 @@
 return require('packer').startup({
     function(use)
         --  Plugins to add:
+        --      https://github.com/voldikss/vim-floaterm
         --
         --  Plugins to configure:
         --      'echasnovski/mini.nvim': maybe better than dashboard-nvim
@@ -81,6 +82,7 @@ return require('packer').startup({
                             'python',
                             'yaml',
                             'glsl',
+                            'scheme',
                         },
                         highlight = {
                             enable = true,
