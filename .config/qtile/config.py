@@ -122,6 +122,7 @@ keys = [
     Key([mod], "g", lazy.spawn("google-chrome-stable"), desc="Launch Google Chrome"),
     Key([mod], "b", lazy.spawn("qutebrowser"), desc="Launch QuteBrowser"),
     Key([mod], "f", lazy.spawn("firefox"), desc="Launch Firefox"),
+    Key([mod], "m", lazy.spawn("sh -c 'export LD_PRELOAD=/usr/lib/spotify-adblock.so; spotify'"), desc="Launch Spotify with adblock"),
     Key([mod, "control", "shift"], "l", lazy.spawn("shutdown now"), desc="Shutdown the system"),
     # Sound
     Key([], "XF86AudioMute", lazy.spawn(f"{home}/.local/scripts/volume/volume.sh mute")),
