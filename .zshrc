@@ -32,7 +32,7 @@ alias tl='trash-list'
 alias rm='echo "Use the trashcan with tp (trash-put).\n\nIf you really want to use rm write a \\ before."; false'
 
 alias onesync='onedrive --synchronize'
-alias spotify='LD_PRELOAD=/usr/lib/spotify-adblock.so spotify'
+# alias spotify='LD_PRELOAD=/usr/lib/spotify-adblock.so spotify'
 
 alias config='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
 

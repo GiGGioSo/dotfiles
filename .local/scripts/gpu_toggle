@@ -3,11 +3,13 @@
 if [ -f "/etc/modprobe.d/blacklist-nvidia.conf" ] && [ -f "/etc/udev/rules.d/00-remove-nvidia.rules" ]; then
     sudo mv "/etc/modprobe.d/blacklist-nvidia.conf" "/etc/modprobe.d/blacklist-nvidia.conf.disabled"
     sudo mv "/etc/udev/rules.d/00-remove-nvidia.rules" "/etc/udev/rules.d/00-remove-nvidia.rules.disabled"
+    sudo systemctl enable --now nvidia-persistenced
     echo "The GPU will be enabled after reboot."
     exit 0
 elif [ -f "/etc/modprobe.d/blacklist-nvidia.conf.disabled" ] && [ -f "/etc/udev/rules.d/00-remove-nvidia.rules.disabled" ]; then
     sudo mv "/etc/modprobe.d/blacklist-nvidia.conf.disabled" "/etc/modprobe.d/blacklist-nvidia.conf"
     sudo mv "/etc/udev/rules.d/00-remove-nvidia.rules.disabled" "/etc/udev/rules.d/00-remove-nvidia.rules"
+    sudo systemctl disable --now nvidia-persistenced
     echo "The GPU will be disabled after reboot."
     exit 0
 else

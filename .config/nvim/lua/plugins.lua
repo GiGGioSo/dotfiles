@@ -226,7 +226,7 @@ return require('packer').startup({
 
         use {
             'hrsh7th/nvim-cmp',
-            event = 'InsertEnter',
+            -- event = 'InsertEnter',
             config = function()
                 require('nvim-cmp')
             end,
@@ -234,7 +234,7 @@ return require('packer').startup({
 
         use { 'hrsh7th/cmp-path', after = 'nvim-cmp' }
         use { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' }
-        use { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' }
+        -- use { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' }
 
         -- Better scrolling
         -- use {
@@ -258,6 +258,8 @@ return require('packer').startup({
             'Pocco81/true-zen.nvim',
             config = function() require('true-zen').setup() end
         }
+
+        use { 'voldikss/vim-floaterm' }
 
         -- Comment toggle
         use {

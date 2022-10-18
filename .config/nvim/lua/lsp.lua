@@ -45,6 +45,10 @@ vim.api.nvim_create_autocmd('User', {
 
         -- Move to the next diagnostic
         map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>')
+
+        -- Disable and enable diagnostics
+        map('n', '<leader>hd', '<cmd>lua vim.diagnostic.disable()<cr>')
+        map('n', '<leader>sd', '<cmd>lua vim.diagnostic.enable()<cr>')
     end,
 })
 
@@ -66,13 +70,14 @@ sign({name = 'DiagnosticSignHint', text = '⚑'})
 sign({name = 'DiagnosticSignInfo', text = ''})
 
 vim.diagnostic.config({
-    virtual_text = false,
+    virtual_text = true,
     severity_sort = true,
+    -- spacing=15,
     float = {
-    border = 'rounded',
-    source = 'always',
-    header = '',
-    prefix = '',
+        border = 'rounded',
+        source = 'always',
+        header = '',
+        prefix = '',
     },
 })
 
@@ -94,7 +99,7 @@ local lsp_defaults = {
     flags = {
         debounce_text_changes = 150,
     },
-    capabilities = require('cmp_nvim_lsp').update_capabilities(
+    capabilities = require('cmp_nvim_lsp').default_capabilities(
         vim.lsp.protocol.make_client_capabilities()
     ),
     on_attach = function(client, bufnr)

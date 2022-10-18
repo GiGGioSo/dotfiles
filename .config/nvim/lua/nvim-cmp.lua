@@ -10,11 +10,11 @@ cmp.setup({
         end
     },
     sources = {
-        {name = 'path'},
-        {name = 'nvim_lsp'},
-        {name = 'buffer'},
-        {name = 'luasnip'},
-        {name = 'cmdline'},
+        {name = 'path', keyword_length=2},
+        {name = 'nvim_lsp', keyword_length=2},
+        -- {name = 'buffer', keyword_length=2},
+        -- {name = 'luasnip', keyword_length=2},
+        -- {name = 'cmdline', keyword_length=2},
     },
     window = {
         documentation = cmp.config.window.bordered()
@@ -34,7 +34,7 @@ cmp.setup({
         end,
     },
     mapping = {
-        ['<CR>'] = cmp.mapping.confirm({select = true}),
+        ['<CR>'] = cmp.mapping.confirm({select = false}),
         ['<Up>'] = cmp.mapping.select_prev_item(select_opts),
         ['<Down>'] = cmp.mapping.select_next_item(select_opts),
         ['<C-Space>'] = cmp.mapping.complete(),
@@ -61,3 +61,6 @@ cmp.setup({
         ['<C-d>'] = cmp.mapping.abort(),
     }
 })
+
+-- local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()) --nvim-cmp
+-- capabilities.textDocument.completion.completionItem.snippetSupport = true
