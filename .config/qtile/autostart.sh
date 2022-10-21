@@ -7,7 +7,7 @@ picom --experimental-backends &
 clight &
 
 # screen locket
-xss-lock -- i3lock
+xss-lock -- i3lock &
 
 
 # << Not in use >>

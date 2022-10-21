@@ -124,7 +124,7 @@ keys = [
     Key([mod], "f", lazy.spawn("firefox"), desc="Launch Firefox"),
     Key([mod], "m", lazy.spawn("sh -c 'export LD_PRELOAD=/usr/lib/spotify-adblock.so; spotify'"), desc="Launch Spotify with adblock"),
     # Lock the pc
-    Key([mod], "l", lazy.spawn("xset s active"), desc="Lock the system"),
+    Key([mod], "l", lazy.spawn("xset s activate"), desc="Lock the system"),
     # Shutdown pc
     Key([mod, "control", "shift"], "l", lazy.spawn("shutdown now"), desc="Shutdown the system"),
     # Sound
