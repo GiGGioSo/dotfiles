@@ -171,11 +171,11 @@ font:
     x: 0
     y: 0
 
-  # Thin stroke font rendering (macOS only)
+  # Thin stroke font rendering (macOS only) DEPRECATED
   #
   # Thin strokes are suitable for retina displays, but for non-retina screens
   # it is recommended to set `use_thin_strokes` to `false`.
-  use_thin_strokes: false
+  # use_thin_strokes: false
 
   # Use built-in font for box drawing characters.
   #
