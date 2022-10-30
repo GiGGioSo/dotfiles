@@ -1,12 +1,12 @@
 configuration {
-	modi: "combi,window,run,ssh";
-/*	font: "mono 12";*/
+	modi: "combi,window,run";
+    font: "mono 13";
 /*	location: 0;*/
 /*	yoffset: 0;*/
 /*	xoffset: 0;*/
 /*	fixed-num-lines: true;*/
-/*	show-icons: false;*/
-/*	terminal: "rofi-sensible-terminal";*/
+    show-icons: true;
+    terminal: "alacritty";
 /*	ssh-client: "ssh";*/
 /*	ssh-command: "{terminal} -e {ssh-client} {host} [-p {port}]";*/
 /*	run-command: "{cmd}";*/
@@ -32,7 +32,7 @@ configuration {
 /*	auto-select: false;*/
 /*	parse-hosts: false;*/
 /*	parse-known-hosts: true;*/
-	combi-modi: "window,run";
+	combi-modi: "run";
 /*	matching: "normal";*/
 /*	tokenize: true;*/
 /*	m: "-5";*/
@@ -43,7 +43,7 @@ configuration {
 /*	window-format: "{w}    {c}   {t}";*/
 /*	click-to-exit: true;*/
 /*	max-history-size: 25;*/
-/*	combi-hide-mode-prefix: false;*/
+    combi-hide-mode-prefix: true;
 /*	combi-display-format: "{mode} {text}";*/
 /*	matching-negate-char: '-' /* unsupported */;*/
 /*	cache-dir: ;*/
@@ -146,4 +146,4 @@ configuration {
   }
 }
 
-@import "~/.cache/wal/colors-rofi-dark"
+/* @import "~/.cache/wal/colors-rofi-dark" */

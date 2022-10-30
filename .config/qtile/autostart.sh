@@ -7,7 +7,7 @@ picom --experimental-backends &
 clight &
 
 # screen locket
-xss-lock -- i3lock &
+xss-lock -- i3lock -i "$HOME/.config/wallpapers/colorful-mountain.png" &
 
 
 # << Not in use >>

@@ -72,11 +72,14 @@ o.splitbelow = true
 -- When running macros and regexes on a large file, lazy redraw tells neovim/vim not to draw the screen
 -- o.lazyredraw = true
 
--- Better folds (don't fold by default)
--- o.foldmethod = 'indent'
+-- Better folds
 -- o.foldlevelstart = 99
 -- o.foldnestmax = 3
 -- o.foldminlines = 1
+-- opt.foldmethod='expr'
+-- opt.foldexpr='nvim_treesitter#foldexpr()'
+-- automatically open all folds opening a file
+-- vim.cmd [[ autocmd BufReadPost,FileReadPost * normal zR ]]
 
 -- Map <leader> to space
 g.mapleader = ' '
