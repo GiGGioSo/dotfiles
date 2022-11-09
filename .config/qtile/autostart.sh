@@ -3,8 +3,9 @@
 # compositor
 picom --experimental-backends &
 
-# automatic backlight based on ambient light
+# automatic backlight based on ambient light and system tray icon for manual setting
 clight &
+clight-gui --tray &
 
 # screen locket
 xss-lock -- i3lock -i "$HOME/.config/wallpapers/colorful-mountain.png" &

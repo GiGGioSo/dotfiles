@@ -115,7 +115,7 @@ keys = [
     Key([mod, "shift"], "c", lazy.window.kill(), desc="Kill focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "r", lazy.spawn("rofi -show combi"), desc="Spawn a command using a prompt widget"),
+    Key([mod], "r", lazy.spawn("rofi -show drun"), desc="Spawn a command using a prompt widget"),
     # Added by me :)
     Key([mod, "control"], "o", lazy.window.toggle_floating(), desc="Toggle to/from floating mode"),
     Key([mod, "control"], "f", lazy.window.toggle_fullscreen(), desc="Toggle to/from fullscreen mode"),
