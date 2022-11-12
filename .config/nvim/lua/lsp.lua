@@ -22,7 +22,7 @@ vim.api.nvim_create_autocmd('User', {
         map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>')
 
         -- Jumps to the definition of the type symbol
-        -- map('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>')
+        map('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>')
 
         -- Lists all the references 
         map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>')
@@ -34,8 +34,8 @@ vim.api.nvim_create_autocmd('User', {
         map('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>')
 
         -- Selects a code action available at the current cursor position
-        -- map('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>')
-        -- map('x', '<F4>', '<cmd>lua vim.lsp.buf.range_code_action()<cr>')
+        map('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>')
+        map('x', '<leader>ca', '<cmd>lua vim.lsp.buf.range_code_action()<cr>')
 
         -- Show diagnostics in a floating window
         map('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>')
@@ -60,7 +60,7 @@ local sign = function(opts)
     vim.fn.sign_define(opts.name, {
         texthl = opts.name,
         text = opts.text,
-        numhl = ''
+        numhl = '',
     })
 end
 
@@ -71,7 +71,10 @@ sign({name = 'DiagnosticSignInfo', text = ''})
 
 vim.diagnostic.config({
     virtual_text = true,
-    severity_sort = true,
+    severity_sort = false,
+    signs = true,
+    update_in_insert = true,
+    underline = true,
     -- spacing=15,
     float = {
         border = 'rounded',
@@ -91,6 +94,10 @@ vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
     {border = 'rounded'}
 )
 
+vim.cmd([[
+set signcolumn=yes
+autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
+]])
 ---
 -- Language servers config
 ---
@@ -123,7 +130,7 @@ lspconfig.dockerls.setup({})
 -- HTML language server
 lspconfig.html.setup({})
 -- Java language server
-lspconfig.java_language_server.setup({})
+lspconfig.jdtls.setup({})
 -- JSON language server
 lspconfig.jsonls.setup({})
 -- LaTeX, Markdown and others language server
@@ -162,4 +169,6 @@ lspconfig.vimls.setup({})
 lspconfig.yamlls.setup({})
 -- Scheme / Racket language server
 lspconfig.racket_langserver.setup({})
+-- Rust lang server
+lspconfig.rust_analyzer.setup({})
 

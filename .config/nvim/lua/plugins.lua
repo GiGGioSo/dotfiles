@@ -17,6 +17,37 @@ return require('packer').startup({
         -- Utils
         use('nvim-lua/plenary.nvim')
 
+        -- LSP, linter and stuff manager
+        use {
+            'williamboman/mason.nvim',
+            config = function ()
+                require('mason').setup()
+            end
+        }
+        use {
+            'williamboman/mason-lspconfig.nvim',
+            config = function ()
+                require("mason-lspconfig").setup({
+                    ensure_installed = {
+                        "sumneko_lua",
+                        "bashls",
+                        "clangd",
+                        "html",
+                        "cmake",
+                        "dockerls",
+                        "jdtls",
+                        "jsonls",
+                        "ltex",
+                        "pyright",
+                        "rust_analyzer",
+                        "vimls",
+                        "yamlls",
+                    },
+                    automatic_installation = true,
+                })
+            end
+        }
+
         -- Status-line and tab-line with needed icons
         use {
             'kyazdani42/nvim-web-devicons',
@@ -204,26 +235,7 @@ return require('packer').startup({
             },
         })
 
-        -- LSP, Completition and shit
-        use {
-            'neovim/nvim-lspconfig',
-            event = 'BufRead',
-            config = function()
-                require('lsp')
-            end,
-            requires = {
-                {
-                    'hrsh7th/cmp-nvim-lsp',
-                },
-            },
-        }
-
-        use {
-            'L3MON4D3/LuaSnip',
-            require("luasnip.loaders.from_vscode").lazy_load()
-        }
-
-
+        -- completition plugin
         use {
             'hrsh7th/nvim-cmp',
             -- event = 'InsertEnter',
@@ -232,31 +244,35 @@ return require('packer').startup({
             end,
         }
 
-        use { 'hrsh7th/cmp-path', after = 'nvim-cmp' }
-        use { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' }
-        -- use { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' }
+        -- LSP completition source
+        use { 'hrsh7th/cmp-nvim-lsp' }
 
-        -- Better scrolling
-        -- use {
-        --     'karb94/neoscroll.nvim',
-        --     config = function()
-        --         require('neoscroll').setup({
-        --             mappings = nil,
-        --             hide_cursor = false,
-        --         })
-        --     end
-        -- }
+        -- Other useful cmp things
+        use { 'hrsh7th/cmp-nvim-lua' }
+        use { 'hrsh7th/cmp-nvim-lsp-signature-help' }
+        use { 'hrsh7th/cmp-path' }
+        use { 'hrsh7th/cmp-buffer' }
+
+        use {
+            "L3MON4D3/LuaSnip",
+            config = function()
+                require("luasnip.loaders.from_vscode").lazy_load()
+            end
+        }
+
+        -- LSP, Completition and shit
+        use {
+            'neovim/nvim-lspconfig',
+            event = 'BufRead',
+            config = function()
+                require('lsp')
+            end,
+        }
 
         -- Autosave
         use {
             'Pocco81/auto-save.nvim',
             config = function() require('auto-save').setup() end
-        }
-
-        -- Zen mode
-        use {
-            'Pocco81/true-zen.nvim',
-            config = function() require('true-zen').setup() end
         }
 
         use { 'voldikss/vim-floaterm' }

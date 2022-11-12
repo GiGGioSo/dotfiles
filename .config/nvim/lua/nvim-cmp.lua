@@ -1,5 +1,5 @@
 local cmp = require('cmp')
-local luasnip = require('luasnip')
+local luasnip = require("luasnip")
 
 local select_opts = {behavior = cmp.SelectBehavior.Select}
 
@@ -10,14 +10,17 @@ cmp.setup({
         end
     },
     sources = {
-        {name = 'path', keyword_length=2},
+        {name = 'path'},
         {name = 'nvim_lsp', keyword_length=2},
-        -- {name = 'buffer', keyword_length=2},
-        -- {name = 'luasnip', keyword_length=2},
-        -- {name = 'cmdline', keyword_length=2},
+        {name = 'luasnip', keyword_length=2},
+        {name = 'nvim-lsp-signature-help'},
+        {name = 'nvim-lua', keyword_length=2},
+        {name = 'calc'},
+        {name = 'buffer', keyword_length=4},
     },
     window = {
-        documentation = cmp.config.window.bordered()
+        completition = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
     },
     formatting = {
         fields = {'menu', 'abbr', 'kind'},
@@ -28,7 +31,6 @@ cmp.setup({
                 buffer = 'Ω',
                 path = '🖫',
             }
-
             item.menu = menu_icon[entry.source.name]
             return item
         end,
