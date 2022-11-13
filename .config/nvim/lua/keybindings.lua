@@ -15,17 +15,13 @@ map({'n', 'v', 'o'}, 'L', '$')
 -- Go to start of the line with H
 map({'n', 'v', 'o'}, 'H', '^')
 
--- Save with ctrl+s
-map({'n', 'i', 'v', 'o'}, '<C-s>', '<CMD>w<CR>')
-
 -- Move to next tab
 map({'n', 'i', 'v'}, '<C-l>', '<CMD>BufferLineCycleNext<CR>')
-
 -- Move to previous tab
 map({'n', 'i', 'v'}, '<C-h>', '<CMD>BufferLineCyclePrev<CR>')
 
 -- Close current tab
--- map({'n', 'i', 'v', 'o'}, '<C-w>', '<CMD>bdelete<CR>')
+map({'n', 'i', 'v', 'o'}, '<C-q>', '<CMD>bdelete<CR>')
 
 -- Telescope keybindings
 map('n', '<leader>ff', '<CMD>Telescope find_files<CR>')

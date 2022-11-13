@@ -91,7 +91,8 @@ g.maplocalleader = ' '
 --      onedarkpro
 --      monokai, monokai_pro, monokai_soda, monokai_ristretto
 --      base16-* NEEDED IF YOU WANT TO USE 'base16' FOR LUALINE
-local colorscheme = 'base16-monokai'
+local colorscheme = 'base16-gruvbox-material-dark-medium'
+-- local colorscheme = 'base16-monokai'
 local _, _ = pcall(vim.cmd, 'colorscheme '..colorscheme)
 
 opt.completeopt = {'menu', 'menuone', 'noselect'}

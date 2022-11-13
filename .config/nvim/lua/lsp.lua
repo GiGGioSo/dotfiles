@@ -73,7 +73,7 @@ vim.diagnostic.config({
     virtual_text = true,
     severity_sort = false,
     signs = true,
-    update_in_insert = true,
+    update_in_insert = false,
     underline = true,
     -- spacing=15,
     float = {
@@ -94,10 +94,10 @@ vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
     {border = 'rounded'}
 )
 
-vim.cmd([[
-set signcolumn=yes
-autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
-]])
+-- vim.cmd([[
+-- set signcolumn=yes
+-- autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
+-- ]])
 ---
 -- Language servers config
 ---
