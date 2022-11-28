@@ -3,12 +3,11 @@
 return require('packer').startup({
     function(use)
         --  Plugins to add:
-        --      https://github.com/voldikss/vim-floaterm
         --
         --  Plugins to configure:
+        --      https://github.com/voldikss/vim-floaterm
         --      'echasnovski/mini.nvim': maybe better than dashboard-nvim
         --      'glepnir/dashboard-nvim': configure into something like the github example
-        --      'Pocco81/true-zen.nvim': doesn't work properly, maybe open issue?
         --
 
         -- Package Manager
@@ -145,6 +144,7 @@ return require('packer').startup({
             event = 'BufRead',
             config = function()
                 require('indent_blankline').setup({
+                    -- space_char_blankline = " ",
                     show_current_context = true,
                     show_current_context_start = true,
                     filetype_exclude = { 'dashboard' }
@@ -189,6 +189,16 @@ return require('packer').startup({
                 event = 'CursorHold',
                 config = function()
                     local actions = require('telescope.actions')
+                    local telescopeConfig = require("telescope.config")
+
+                    -- Clone the default Telescope configuration
+                    local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
+                    -- I want to search in hidden/dot files.
+                    table.insert(vimgrep_arguments, "--hidden")
+                    -- I don't want to search in the `.git` directory.
+                    table.insert(vimgrep_arguments, "--glob")
+                    table.insert(vimgrep_arguments, "!.git/*")
+
                     require('telescope').setup({
                         defaults = {
                             prompt_prefix = ' ❯ ',
@@ -201,7 +211,7 @@ return require('packer').startup({
                             },
                             mappings = {
                                 i = {
-                                    ['<A-c>'] = actions.close,
+                                    ['<esc>'] = actions.close,
                                     ['<C-j>'] = actions.move_selection_next,
                                     ['<C-k>'] = actions.move_selection_previous,
                                     ['<A-J>'] = actions.preview_scrolling_down,
@@ -209,24 +219,25 @@ return require('packer').startup({
                                 },
                             },
                         },
-                        extensions = {
-                            fzf = {
-                                fuzzy = true,
-                                override_generic_sorter = true, -- override the generic sorter
-                                override_file_sorter = true, -- override the file sorter
-                                case_mode = 'smart_case', -- "smart_case" | "ignore_case" | "respect_case"
-                            },
-                        },
+                        -- extensions = {
+                        --     fzf = {
+                        --         fuzzy = true,
+                        --         override_generic_sorter = true, -- override the generic sorter
+                        --         override_file_sorter = true, -- override the file sorter
+                        --         case_mode = 'smart_case', -- "smart_case" | "ignore_case" | "respect_case"
+                        --     },
+                        -- },
                         pickers = {
                             find_files = {
-                                hidden = true,
+                                -- hidden = true -- will still show the inside of `.git/`
+                                find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
                             }
                         }
                     })
                 end,
             },
             {
-                'nvim-telescope/telescope-fzf-native.nvim',
+                'nvim-telescope/telescope-fzf-native.nvim', -- As of now I'm not using it
                 after = 'telescope.nvim',
                 run = 'make',
                 config = function()

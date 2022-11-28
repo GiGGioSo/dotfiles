@@ -1,17 +1,19 @@
-local function map(m, k, v)
-    vim.keymap.set(m, k, v, { silent = true })
+local function map(m, k, v, opts)
+    local options = {silent = true}
+    if opts then options = vim.tbl_extend('force', options, opts) end
+    vim.keymap.set(m, k, v, options)
 end
 
 local function del(m, k)
     vim.keymap.del(m, k, {silent = true})
 end
 
+
 -- Exit insert mode with alt+c
-map({'i', 'n', 'v', 'o'}, '<A-c>', '<ESC>')
+map({'i', 'n', 'v', 'o', 't'}, '<A-c>', '<ESC>')
 
 -- Go to end of the line with L
 map({'n', 'v', 'o'}, 'L', '$')
-
 -- Go to start of the line with H
 map({'n', 'v', 'o'}, 'H', '^')
 
@@ -19,6 +21,11 @@ map({'n', 'v', 'o'}, 'H', '^')
 map({'n', 'i', 'v'}, '<C-l>', '<CMD>BufferLineCycleNext<CR>')
 -- Move to previous tab
 map({'n', 'i', 'v'}, '<C-h>', '<CMD>BufferLineCyclePrev<CR>')
+
+
+-- NON FUNZIONANO!!!!
+-- Paste without without yanking the replaced part
+-- map({'x'}, '<leader>p', '<CMD>"0p<CR>', {noremap = true})
 
 -- Close current tab
 map({'n', 'i', 'v', 'o'}, '<C-q>', '<CMD>bdelete<CR>')

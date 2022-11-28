@@ -159,9 +159,9 @@ lspconfig.sumneko_lua.setup({
             },
         },
     },
-    on_attach = function(client, bufnr)
-        lspconfig.util.default_config.on_attach(client, bufnr)
-    end
+    -- on_attach = function(client, bufnr)
+    --     lspconfig.util.default_config.on_attach(client, bufnr)
+    -- end
 })
 -- Vim-script language server
 lspconfig.vimls.setup({})
@@ -171,4 +171,10 @@ lspconfig.yamlls.setup({})
 lspconfig.racket_langserver.setup({})
 -- Rust lang server
 lspconfig.rust_analyzer.setup({})
+-- Assembly lang server
+-- lspconfig.asm_lsp.setup({
+--     filetypes = {
+--         "asm", "vmasm", "s"
+--     }
+-- })
 
