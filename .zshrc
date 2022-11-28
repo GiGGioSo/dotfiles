@@ -87,6 +87,8 @@ RPROMPT=''
 PROMPT='%B%F{red}%*%f %F{blue}%n%f%F{blue}:[%f%F{red}%~%f%F{blue}]%f %B%F{magenta}${vcs_info_msg_0_}%f${NEWLINE}%F{blue}%f%b '
 # PROMPT='%B%F{cyan}%n %F{red}%c > %F{white}'
 
+# Something to jump around
+[[ -r "/usr/share/z/z.sh" ]] && source /usr/share/z/z.sh
 
 ## Key Bindings
 #
