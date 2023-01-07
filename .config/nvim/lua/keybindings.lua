@@ -22,6 +22,9 @@ map({'n', 'i', 'v'}, '<C-l>', '<CMD>BufferLineCycleNext<CR>')
 -- Move to previous tab
 map({'n', 'i', 'v'}, '<C-h>', '<CMD>BufferLineCyclePrev<CR>')
 
+-- Better Ctrl-d and Ctrl-u
+map({'n', 'v'}, '<C-d>', '<C-d>zz')
+map({'n', 'v'}, '<C-u>', '<C-u>zz')
 
 -- NON FUNZIONANO!!!!
 -- Paste without without yanking the replaced part

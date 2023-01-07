@@ -1,5 +1,7 @@
 -- Here I will insert all my plugins, using packer
 
+-- TODO 
+
 return require('packer').startup({
     function(use)
         --  Plugins to add:
@@ -36,13 +38,14 @@ return require('packer').startup({
                         "dockerls",
                         "jdtls",
                         "jsonls",
-                        "ltex",
+                        "marksman",
+                        -- "ltex",
                         "pyright",
                         "rust_analyzer",
                         "vimls",
                         "yamlls",
                     },
-                    automatic_installation = true,
+                    automatic_installation = false,
                 })
             end
         }
@@ -90,10 +93,10 @@ return require('packer').startup({
         use({
             {
                 'nvim-treesitter/nvim-treesitter',
-                run = ":TSUpdate",
+                -- run = ":TSUpdate",
                 config = function()
                     require('nvim-treesitter.configs').setup({
-                        auto_install = true,
+                        auto_install = false,
                         ensure_installer = {
                             'lua',
                             'javascript',
@@ -117,10 +120,19 @@ return require('packer').startup({
                         highlight = {
                             enable = true,
                             additional_vim_regex_highlighting = false,
+                            disable = function(lang, bufnr)
+                                    return (vim.api.nvim_buf_line_count(bufnr) > 5000)
+                            end
                         },
-                        refactor = {
-                            highlight_definitions = { enable = true },
-                            highlight_current_scope = { enable = false },
+                        -- refactor = {
+                        --     highlight_definitions = { enable = true },
+                        --     highlight_current_scope = { enable = false },
+                        -- },
+                        indent = {
+                            enable = true,
+                            disable = function(lang, bufnr)
+                                    return (vim.api.nvim_buf_line_count(bufnr) > 5000)
+                            end
                         },
                     })
                 end,
@@ -279,6 +291,20 @@ return require('packer').startup({
                 require('lsp')
             end,
         }
+
+        -- todo and other tags manager
+        use {
+            "folke/todo-comments.nvim",
+            config = function()
+                require("todo-comments").setup({})
+            end
+        }
+
+        -- Markdown previewer
+        use({
+            "iamcco/markdown-preview.nvim",
+            run = function() vim.fn["mkdp#util#install"]() end,
+        })
 
         -- Autosave
         use {

@@ -134,7 +134,7 @@ lspconfig.jdtls.setup({})
 -- JSON language server
 lspconfig.jsonls.setup({})
 -- LaTeX, Markdown and others language server
-lspconfig.ltex.setup({})
+-- lspconfig.ltex.setup({})
 -- Python language server
 lspconfig.pyright.setup({})
 -- Lua language server
@@ -177,4 +177,6 @@ lspconfig.rust_analyzer.setup({})
 --         "asm", "vmasm", "s"
 --     }
 -- })
+-- Markdown language server
+lspconfig.marksman.setup({})
 
