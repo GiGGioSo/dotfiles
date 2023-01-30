@@ -23,8 +23,8 @@ map({'n', 'i', 'v'}, '<C-l>', '<CMD>BufferLineCycleNext<CR>')
 map({'n', 'i', 'v'}, '<C-h>', '<CMD>BufferLineCyclePrev<CR>')
 
 -- Better Ctrl-d and Ctrl-u
-map({'n', 'v'}, '<C-d>', '<C-d>zz')
-map({'n', 'v'}, '<C-u>', '<C-u>zz')
+map({'n', 'v'}, '<C-d>', '<C-d>')
+map({'n', 'v'}, '<C-u>', '<C-u>')
 
 -- NON FUNZIONANO!!!!
 -- Paste without without yanking the replaced part

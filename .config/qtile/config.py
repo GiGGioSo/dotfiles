@@ -30,8 +30,7 @@
 ## Dotfiles for reference
 # - https://github.com/the-argus/rose-pine-dots
 
-from libqtile import bar, layout, widget, hook, qtile
-from libqtile.log_utils import logger
+from libqtile import bar, layout, widget, hook
 from libqtile.config import Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
@@ -39,6 +38,8 @@ import subprocess
 import os
 
 mod = "mod4"
+alt = "mod1"
+
 terminal = guess_terminal()
 home = os.path.expanduser("~")
 
@@ -115,10 +116,11 @@ keys = [
     Key([mod, "shift"], "c", lazy.window.kill(), desc="Kill focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "r", lazy.spawn("rofi -show drun"), desc="Spawn a command using a prompt widget"),
+    Key([alt], "space", lazy.spawn("rofi -show drun"), desc="Spawn a command using a prompt widget"),
     # Added by me :)
     Key([mod, "control"], "o", lazy.window.toggle_floating(), desc="Toggle to/from floating mode"),
     Key([mod, "control"], "f", lazy.window.toggle_fullscreen(), desc="Toggle to/from fullscreen mode"),
+    Key([mod], "n", lazy.spawn("speedcrunch"), desc="Launch SpeedCrunch"),
     Key([mod], "g", lazy.spawn("google-chrome-stable"), desc="Launch Google Chrome"),
     Key([mod], "b", lazy.spawn("qutebrowser"), desc="Launch QuteBrowser"),
     Key([mod], "f", lazy.spawn("firefox"), desc="Launch Firefox"),
@@ -318,6 +320,8 @@ floating_layout = layout.Floating(
         Match(wm_class="ssh-askpass"),  # ssh-askpass
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
+        # Speedcrunch in floating mode by default
+        Match(wm_class="speedcrunch"),  # ssh-askpass
     ]
 )
 auto_fullscreen = True
