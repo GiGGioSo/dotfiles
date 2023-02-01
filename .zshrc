@@ -69,6 +69,7 @@ alias config='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
 alias v='nvim'
 alias aw='archwiki'
 alias :q='sl'
+alias :wq='sl'
 # alias gpu='DRI_PRIME=1'
 # alias gpu='__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia'
 
