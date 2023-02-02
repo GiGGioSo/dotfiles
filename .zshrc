@@ -1,4 +1,3 @@
-# Created by newuser for 5.9
 
 # Autocompletion
 autoload -Uz compinit
@@ -65,7 +64,6 @@ alias blueoff='sudo systemctl stop --now bluetooth'
 
 alias config='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
 
-# alias wg='wal_global'
 alias v='nvim'
 alias aw='archwiki'
 alias :q='sl'
@@ -78,7 +76,9 @@ typeset -U path PATH
 path+=($HOME/.local/bin)
 path+=($HOME/.local/scripts) # Include directories recursively
 path+=($HOME/.local/scripts/**/*(N/)) # Include directories recursively
-path+=($HOME/gits/ltex-ls-15.2.0/bin)
+
+# NOTE: I used this for a language server in nvim, no more
+# path+=($HOME/gits/ltex-ls-15.2.0/bin)
 export PATH
 
 # Prompt configuration
