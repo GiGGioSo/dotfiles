@@ -120,11 +120,10 @@ keys = [
     # Added by me :)
     Key([mod, "control"], "o", lazy.window.toggle_floating(), desc="Toggle to/from floating mode"),
     Key([mod, "control"], "f", lazy.window.toggle_fullscreen(), desc="Toggle to/from fullscreen mode"),
-    Key([mod], "n", lazy.spawn("speedcrunch"), desc="Launch SpeedCrunch"),
+    Key([mod], "m", lazy.spawn("speedcrunch"), desc="Launch SpeedCrunch"),
     Key([mod], "g", lazy.spawn("google-chrome-stable"), desc="Launch Google Chrome"),
     Key([mod], "b", lazy.spawn("qutebrowser"), desc="Launch QuteBrowser"),
     Key([mod], "f", lazy.spawn("firefox"), desc="Launch Firefox"),
-    Key([mod], "m", lazy.spawn("sh -c 'export LD_PRELOAD=/usr/lib/spotify-adblock.so; spotify'"), desc="Launch Spotify with adblock"),
     # Lock the pc
     Key([mod], "o", lazy.spawn("xset s activate"), desc="Lock the system"),
     # Shutdown pc
