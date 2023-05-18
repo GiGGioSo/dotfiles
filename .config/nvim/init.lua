@@ -12,7 +12,7 @@ o.keywordprg = ':help'
 o.termguicolors = true
 
 -- Color scheme
-vim.cmd(':colorscheme slate')
+vim.cmd(':colorscheme base16-gruvbox-material-dark-hard')
 o.background = 'dark'
 
 -- Mouse support
@@ -47,12 +47,12 @@ o.scrolloff = 6
 
 -- Folding options
 opt.foldmethod = 'indent'
-opt.foldnestmax = 1
+opt.foldnestmax = 2
 -- Change fold colors
-vim.cmd(':highlight Folded guibg=Gray guifg=DarkRed')
+-- vim.cmd(':highlight Folded guibg=Gray guifg=DarkRed')
 
 -- Better completition
-vim.cmd('set path+=**')
+vim.cmd('set path=.,**')
 o.completeopt = 'menuone,preview,noselect'
 
 -- Decrease update times
@@ -68,17 +68,6 @@ o.undofile = true
 -- Better buffer splitting
 o.splitright = true
 o.splitbelow = true
-
--- ### My functions ###
-local function search_in_zeal()
-    -- I use "d register for the documentation
-    local PATH_TO_ZEAL = "/usr/bin/zeal"
-    vim.api.nvim_feedkeys('lbve"dy', 'x', true)
-    local yanked = vim.fn.getreg('"d')
-    vim.fn.jobstart(PATH_TO_ZEAL .. " " .. yanked)
-    print("Searching '" .. yanked .. "' into Zeal...")
-end
-
 
 -- ### Keybindings ###
 g.mapleader = ' '
@@ -98,7 +87,6 @@ vim.keymap.set('t', '<ESC>', '<C-\\><C-n>')
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
-vim.keymap.set('n', '<leader>k', search_in_zeal, { expr = true, silent = false })
 
 -- ### Paq plugin manager
 require "paq" {
@@ -106,23 +94,9 @@ require "paq" {
     "RRethy/nvim-base16" -- Colorschemes
 }
 
-
--- ### User defined commands ###
-vim.api.nvim_create_user_command(
-    'SearchInZeal',
-    search_in_zeal,
-    {})
-
 -- ### Autocommands ###
 local augroup = vim.api.nvim_create_augroup('user_cmds', {clear = true})
 
--- Highlight column 80 on certain filetypes
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'c', 'cpp'},
-    group = augroup,
-    desc = 'Highlight column 80 to help formatting correctly',
-    command = 'set colorcolumn=80'
-})
 -- Quit with 'q' from man and help menus
 vim.api.nvim_create_autocmd('FileType', {
     pattern = {'help', 'man'},

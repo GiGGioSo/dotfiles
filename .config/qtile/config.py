@@ -30,7 +30,7 @@
 ## Dotfiles for reference
 # - https://github.com/the-argus/rose-pine-dots
 
-from libqtile import bar, layout, widget, hook
+from libqtile import bar, layout, widget, hook, qtile
 from libqtile.config import Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
@@ -121,7 +121,6 @@ keys = [
     Key([mod, "control"], "o", lazy.window.toggle_floating(), desc="Toggle to/from floating mode"),
     Key([mod, "control"], "f", lazy.window.toggle_fullscreen(), desc="Toggle to/from fullscreen mode"),
     Key([mod], "m", lazy.spawn("speedcrunch"), desc="Launch SpeedCrunch"),
-    Key([mod], "g", lazy.spawn("google-chrome-stable"), desc="Launch Google Chrome"),
     Key([mod], "b", lazy.spawn("qutebrowser"), desc="Launch QuteBrowser"),
     Key([mod], "f", lazy.spawn("firefox"), desc="Launch Firefox"),
     # Lock the pc
@@ -276,6 +275,9 @@ screens = [
                 widget.Volume(
                     fmt="VOL:{}",
                     background=colors[4],
+                    mouse_callbacks = {
+                        'Button3': lambda: qtile.cmd_spawn('pavucontrol'),
+                    },
                 ),
                 separator_widget(colors[1], colors[4]),
                 widget.Clock(
