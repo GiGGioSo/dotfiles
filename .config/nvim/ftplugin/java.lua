@@ -15,7 +15,7 @@ opt.colorcolumn = "80"
 
 opt.path:append("/usr/lib/jvm/default/lib/src/java.base/**")
 
-opt.makeprg = "javac\\ %"
+opt.makeprg = "javac %"
 
 vim.keymap.set('n', '<leader>k',
     function() Utils.search_in_zeal("java17") end,

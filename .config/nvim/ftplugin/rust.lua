@@ -11,10 +11,10 @@ opt.foldnestmax = 2
 
 opt.colorcolumn = "80"
 
-vim.keymap.set('n', '<leader>k',
-    function() Utils.search_in_zeal("cpp") end,
-    { expr = true, silent = false })
-
-vim.keymap.set('n', '<leader>c',
-    Utils.toggle_colorcolumn,
-    { expr = true, silent = false })
+-- vim.keymap.set('n', '<leader>k',
+--     function() Utils.search_in_zeal("cpp") end,
+--     { expr = true, silent = false })
+-- 
+-- vim.keymap.set('n', '<leader>c',
+--     Utils.toggle_colorcolumn,
+--     { expr = true, silent = false })

@@ -78,7 +78,7 @@ vim.keymap.set({'n', 'x'}, 'x', '"_x')
 vim.keymap.set('v', '<leader>p', '"_dP')
 
 -- Automatically save the current file when going into normal mode
-vim.keymap.set({'i', 'n', 'v', 'x'}, '<ESC>', '<ESC><CMD>w<CR>')
+vim.keymap.set('n', '<leader>w', '<CMD>w<CR>')
 
 -- Exit from terminal mode
 vim.keymap.set('t', '<ESC>', '<C-\\><C-n>')

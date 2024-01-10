@@ -45,6 +45,8 @@ zstyle ':vcs_info:git:*' formats ' %b%u%c'
 # Environment variables
 export EDITOR=nvim
 
+# export LIBVA_DRIVER_NAME=vdpau # Hardware video acceleration with nvidia drivers
+
 # Zsh options
 
 # Aliases
@@ -68,6 +70,7 @@ alias v='nvim'
 alias aw='archwiki'
 alias :q='sl'
 alias :wq='sl'
+alias rain='cmatrix -a -b -C red -s'
 # alias gpu='DRI_PRIME=1'
 # alias gpu='__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia'
 

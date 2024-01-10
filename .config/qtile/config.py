@@ -34,6 +34,7 @@ from libqtile import bar, layout, widget, hook, qtile
 from libqtile.config import Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+from libqtile.command.client import CommandClient
 import subprocess
 import os
 
@@ -42,6 +43,7 @@ alt = "mod1"
 
 terminal = guess_terminal()
 home = os.path.expanduser("~")
+
 
 SIZE=23
 
@@ -55,6 +57,14 @@ def load_colors(cache):
     colors.append('#ffffff')
     lazy.reload()
 load_colors(cache)
+
+def increase_backlight_callback():
+    qtile.spawn("/usr/bin/light -A 2")
+    qtile.widgets_map["genpollcommand"].force_update()
+
+def decrease_backlight_callback():
+    qtile.spawn("/usr/bin/light -U 2")
+    qtile.widgets_map["genpollcommand"].force_update()
 
 ### Colorful mountain theme ###
 colors = [
@@ -104,11 +114,7 @@ keys = [
     # Split = all windows displayed
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
-    Key(
-        [mod, "shift"],
-        "Return",
-        lazy.layout.toggle_split(),
-        desc="Toggle between split and unsplit sides of stack",
+    Key( [mod, "shift"], "Return", lazy.layout.toggle_split(), desc="Toggle between split and unsplit sides of stack",
     ),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     # Toggle between different layouts as defined below
@@ -127,10 +133,21 @@ keys = [
     Key([mod], "o", lazy.spawn("xset s activate"), desc="Lock the system"),
     # Shutdown pc
     Key([mod, "control", "shift"], "l", lazy.spawn("shutdown now"), desc="Shutdown the system"),
+    # Shutdown pc
+    Key([mod, "control", "shift"], "h", lazy.spawn("systemctl hibernate"), desc="Hibernate the system"),
     # Sound
     Key([], "XF86AudioMute", lazy.spawn(f"{home}/.local/scripts/volume/volume.sh mute")),
     Key([], "XF86AudioLowerVolume", lazy.spawn(f"{home}/.local/scripts/volume/volume.sh down")),
     Key([], "XF86AudioRaiseVolume", lazy.spawn(f"{home}/.local/scripts/volume/volume.sh up")),
+    # Screen backlight
+    Key([], "XF86MonBrightnessUp",
+        lazy.spawn(f"/usr/bin/light -A 5"),
+        lazy.widget["genpollcommand"].force_update(),
+        desc="Increase screen backlight"),
+    Key([], "XF86MonBrightnessDown",
+        lazy.spawn(f"/usr/bin/light -U 5"),
+        lazy.widget["genpollcommand"].force_update(),
+        desc="Decrease screen backlight"),
     # Rotate screen
     Key([], "XF86Launch2", lazy.spawn(f"{home}/.local/scripts/screen/rotate_screen.sh"), desc="Rotate the screen"),
     # Screenshot utility
@@ -139,6 +156,8 @@ keys = [
     Key([mod, "shift"], "t", lazy.spawn(f"{home}/.local/scripts/touchpad_toggle.sh toggle"), lazy.widget["widgetbox"].toggle(), desc="Toggle touchpad"),
     # Color picker
     Key([mod, "shift"], "p", lazy.spawn(f"{home}/.local/scripts/pick_color.sh"), desc="Pick color from the screen"),
+    # Change keyboard layout
+    Key([alt], "k", lazy.spawn(f"{home}/.local/scripts/change_kb_layout.sh"), desc="Change keyboard layout"),
 ]
 groups = [Group(i) for i in "123456789"]
 
@@ -239,32 +258,51 @@ screens = [
                 ),
                 widget.Systray(),
                 widget.Spacer(length=5),
-                widget.WidgetBox( # make the touchpad-disabled icon appear only when needed
-                    font="Anonymous Pro",
-                    fontsize=SIZE-1,
-                    foreground=colors[1], # color of the next widget
-                    text_closed="\ue0be",
-                    text_open="",
-                    widgets = [
-                        separator_widget(colors[4]),
-                        widget.Image(
-                            filename="/usr/share/icons/Adwaita/48x48/status/touchpad-disabled-symbolic.symbolic.png",
-                            background=colors[4],
-                            margin=1,
-                        ),
-                        separator_widget(colors[1], colors[4]),
-                    ]
+                # widget.WidgetBox( # make the touchpad-disabled icon appear only when needed
+                #     font="Anonymous Pro",
+                #     fontsize=SIZE-1,
+                #     foreground=colors[1], # color of the next widget
+                #     text_closed="\ue0be",
+                #     text_open="",
+                #     widgets = [
+                #         separator_widget(colors[4]),
+                #         widget.Image(
+                #             filename="/usr/share/icons/Adwaita/48x48/status/touchpad-disabled-symbolic.symbolic.png",
+                #             background=colors[4],
+                #             margin=1,
+                #         ),
+                #         separator_widget(colors[1], colors[4]),
+                #     ]
+                # ),
+                separator_widget(colors[4], colors[0]),
+                widget.GenPollCommand(
+                    cmd="/usr/bin/light -G | cut -d. -f1",
+                    fmt="LIGHT:{}",
+                    shell=True,
+                    update_interval=60, # I update when I change the backlight
+                    background=colors[4],
+                    mouse_callbacks = {
+                        'Button4': increase_backlight_callback,
+                        'Button5': decrease_backlight_callback,
+                    },
                 ),
+                separator_widget(colors[1], colors[4]),
                 widget.CPU(
                     format="CPU:{load_percent}%",
                     background=colors[1],
+                    mouse_callbacks = {
+                        'Button3': lambda: qtile.spawn('alacritty -e btop'),
+                    },
                 ),
                 separator_widget(colors[2], colors[1]),
                 widget.Memory(
                     format="RAM:{MemUsed:.2f}G",
                     measure_mem='G',
                     background=colors[2],
-                    ),
+                    mouse_callbacks = {
+                        'Button3': lambda: qtile.spawn('alacritty -e btop'),
+                    },
+                ),
                 separator_widget(colors[3], colors[2]),
                 widget.Battery(
                     background=colors[3],
@@ -276,13 +314,16 @@ screens = [
                     fmt="VOL:{}",
                     background=colors[4],
                     mouse_callbacks = {
-                        'Button3': lambda: qtile.cmd_spawn('pavucontrol'),
+                        'Button3': lambda: qtile.spawn('pavucontrol'),
                     },
                 ),
                 separator_widget(colors[1], colors[4]),
                 widget.Clock(
                     format="%d-%-m-%Y %-H:%M:%S",
                     background=colors[1],
+                    mouse_callbacks = {
+                        'Button3': lambda: qtile.spawn('coretime'),
+                    }
                 ),
             ],
             size=SIZE,
