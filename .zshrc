@@ -54,6 +54,8 @@ alias ls='lsd'
 alias la='lsd -A'
 alias ll='lsd -lA'
 
+alias cls='clear'
+
 alias tp='trash-put'
 alias tl='trash-list'
 alias rm='echo "Use the trashcan with tp (trash-put).\n\nIf you really want to use rm write a \\ before."; false'
@@ -144,3 +146,7 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
 	add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
 	add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
 fi
+
+alias nvm_start='export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'
+
+
