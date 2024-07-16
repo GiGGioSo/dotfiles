@@ -192,7 +192,9 @@ layouts = [
         border_width=3,
         margin=4,
     ),
-    layout.Max(),
+    layout.Max(
+        margin=4,
+    ),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -315,6 +317,7 @@ screens = [
                     background=colors[4],
                     mouse_callbacks = {
                         'Button3': lambda: qtile.spawn('pavucontrol'),
+                        'Button1': lambda: qtile.spawn(f"{home}/.local/scripts/volume/volume.sh mute"),
                     },
                 ),
                 separator_widget(colors[1], colors[4]),

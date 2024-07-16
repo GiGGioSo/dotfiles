@@ -5,7 +5,9 @@ function send_notification {
     volume="$(amixer get Master | grep '%' | head -n 1 | cut -d '[' -f 2 | cut -d '%' -f 1)"
     mute="$(amixer get Master | grep '%' | grep -oE '[^ ]+$' | grep off)"
 
-    if [ $volume -eq "0" ] || [ ! -z "$mute" ]; then
+    if [ ! -z "$mute" ]; then
+        notify-send -a 'Volume' "Volume: MUTED" -r 3301 -i audio-volume-muted-symbolic.symbolic -t 1200
+    elif [ $volume -eq "0" ]; then
         notify-send -a 'Volume' "Volume: $volume%" -h int:value:$volume -r 3301 -i audio-volume-muted-symbolic.symbolic -t 1200
     elif [ $volume -lt "51" ]; then
         notify-send -a 'Volume' "Volume: $volume%" -h int:value:$volume -r 3301 -i audio-volume-low-symbolic.symbolic -t 1200
