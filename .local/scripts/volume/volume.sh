@@ -6,11 +6,11 @@ function send_notification {
     mute="$(amixer get Master | grep '%' | grep -oE '[^ ]+$' | grep off)"
 
     if [ ! -z "$mute" ]; then
-        notify-send -a 'Volume' "Volume: MUTED" -r 3301 -i audio-volume-muted-symbolic.symbolic -t 1200
+        notify-send -a 'Volume' "Volume: MUTED" -r 3301 -t 1200
     elif [ $volume -eq "0" ]; then
-        notify-send -a 'Volume' "Volume: $volume%" -h int:value:$volume -r 3301 -i audio-volume-muted-symbolic.symbolic -t 1200
+        notify-send -a 'Volume' "Volume: $volume%" -h int:value:$volume -r 3301 -t 1200
     elif [ $volume -lt "51" ]; then
-        notify-send -a 'Volume' "Volume: $volume%" -h int:value:$volume -r 3301 -i audio-volume-low-symbolic.symbolic -t 1200
+        notify-send -a 'Volume' "Volume: $volume%" -h int:value:$volume -r 3301 -t 1200
     else
         notify-send -a 'Volume' "Volume: $volume%" -h int:value:$volume -r 3301 -i audio-volume-high-symbolic.symbolic -t 1200
     fi
@@ -19,15 +19,18 @@ function send_notification {
 
 case $1 in
     up)
-	amixer -q sset Master 5%+
-    send_notification
-	;;
+        amixer -q sset Master $2%+
+        send_notification
+        ;;
     down)
-	amixer -q sset Master 5%-
-    send_notification
-	;;
+        amixer -q sset Master $2%-
+        send_notification
+        ;;
     mute)
-	amixer -q set Master toggle
-    send_notification
-    ;;
+        amixer -q set Master toggle
+        send_notification
+        ;;
+    notify)
+        send_notification
+        ;;
 esac

@@ -48,15 +48,15 @@ home = os.path.expanduser("~")
 SIZE=23
 
 ### Pywal COLORS ###
-colors = []
-cache='/home/gio/.cache/wal/colors'
-def load_colors(cache):
-    with open(cache, 'r') as file:
-        for _ in range(8):
-            colors.append(file.readline().strip())
-    colors.append('#ffffff')
-    lazy.reload()
-load_colors(cache)
+# colors = []
+# cache='/home/gio/.cache/wal/colors'
+# def load_colors(cache):
+#     with open(cache, 'r') as file:
+#         for _ in range(8):
+#             colors.append(file.readline().strip())
+#     colors.append('#ffffff')
+#     lazy.reload()
+# load_colors(cache)
 
 def increase_backlight_callback():
     qtile.spawn("/usr/bin/light -A 2")
@@ -129,6 +129,7 @@ keys = [
     Key([mod], "m", lazy.spawn("speedcrunch"), desc="Launch SpeedCrunch"),
     Key([mod], "b", lazy.spawn("qutebrowser"), desc="Launch QuteBrowser"),
     Key([mod], "f", lazy.spawn("firefox"), desc="Launch Firefox"),
+    Key([mod], "g", lazy.spawn("chromium"), desc="Launch Chromium"),
     # Lock the pc
     Key([mod], "o", lazy.spawn("xset s activate"), desc="Lock the system"),
     # Shutdown pc
@@ -137,8 +138,8 @@ keys = [
     Key([mod, "control", "shift"], "h", lazy.spawn("systemctl hibernate"), desc="Hibernate the system"),
     # Sound
     Key([], "XF86AudioMute", lazy.spawn(f"{home}/.local/scripts/volume/volume.sh mute")),
-    Key([], "XF86AudioLowerVolume", lazy.spawn(f"{home}/.local/scripts/volume/volume.sh down")),
-    Key([], "XF86AudioRaiseVolume", lazy.spawn(f"{home}/.local/scripts/volume/volume.sh up")),
+    Key([], "XF86AudioLowerVolume", lazy.spawn(f"{home}/.local/scripts/volume/volume.sh down 5")),
+    Key([], "XF86AudioRaiseVolume", lazy.spawn(f"{home}/.local/scripts/volume/volume.sh up 5")),
     # Screen backlight
     Key([], "XF86MonBrightnessUp",
         lazy.spawn(f"/usr/bin/light -A 5"),
@@ -315,9 +316,12 @@ screens = [
                 widget.Volume(
                     fmt="VOL:{}",
                     background=colors[4],
+                    mute_command=f"{home}/.local/scripts/volume/volume.sh mute",
+                    volume_up_command=f"{home}/.local/scripts/volume/volume.sh up 2",
+                    volume_down_command=f"{home}/.local/scripts/volume/volume.sh down 2",
                     mouse_callbacks = {
                         'Button3': lambda: qtile.spawn('pavucontrol'),
-                        'Button1': lambda: qtile.spawn(f"{home}/.local/scripts/volume/volume.sh mute"),
+                        # 'Button1': lambda: qtile.spawn(f"{home}/.local/scripts/volume/volume.sh mute"),
                     },
                 ),
                 separator_widget(colors[1], colors[4]),
