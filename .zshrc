@@ -2,7 +2,6 @@
 # Autocompletion
 autoload -Uz compinit
 compinit
-
 zstyle ':completion:*' menu select
 
 # Prompt themes
@@ -60,11 +59,15 @@ alias tp='trash-put'
 alias tl='trash-list'
 alias rm='echo "Use the trashcan with tp (trash-put).\n\nIf you really want to use rm write a \\ before."; false'
 
-alias onesync='onedrive --sync'
+alias onesync='onedrive --sync --disable-notifications'
 # alias spotify='LD_PRELOAD=/usr/lib/spotify-adblock.so spotify'
 
 alias blueon='sudo systemctl start --now bluetooth'
 alias blueoff='sudo systemctl stop --now bluetooth'
+
+alias ts='tailscale'
+
+alias dassh='ssh -i ~/.ssh/id_rsa_da'
 
 alias config='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
 
@@ -79,6 +82,7 @@ alias rain='cmatrix -a -b -C red -s'
 # Additions to PATH
 typeset -U path PATH
 path+=($HOME/gits/processing-4.2)
+path+=($HOME/.cargo/bin)
 path+=($HOME/.local/bin)
 path+=($HOME/.local/scripts) # Include directories recursively
 path+=($HOME/.local/scripts/**/*(N/)) # Include directories recursively
@@ -149,4 +153,60 @@ fi
 
 alias nvm_start='export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'
 
+tml() {
+    local raw session
+    raw=$(tmuxp ls | fzf \
+        --preview '
+            name=$(echo {1} | tr -d "'\''");
+            file="$HOME/.config/tmuxp/${name}.yaml";
+            if [ -f "$file" ]; then
+                bat --style=plain --color=always "$file"
+            else
+                echo "File not found: $file"
+            fi
+        ' \
+        --preview-window=right:60% \
+        --border=rounded \
+    ) || return
 
+    # rimuove gli apici dal nome per tmuxp load
+    session=$(echo "$raw" | tr -d "'\''")
+    echo "Loading: $session"
+    tmuxp load "$session"
+}
+
+tme() {
+    local raw session
+    raw=$(tmuxp ls | fzf \
+        --preview '
+            name=$(echo {1} | tr -d "'\''");
+            file="$HOME/.config/tmuxp/${name}.yaml";
+            if [ -f "$file" ]; then
+                bat --style=plain --color=always "$file"
+            else
+                echo "File not found: $file"
+            fi
+        ' \
+        --preview-window=right:60% \
+        --border=rounded \
+    ) || return
+
+    # rimuove gli apici dal nome per tmuxp load
+    session=$(echo "$raw" | tr -d "'\''")
+    tmuxp edit "$session"
+}
+
+
+[ -f "/home/gio/.ghcup/env" ] && . "/home/gio/.ghcup/env" # ghcup-env
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"
+
+
+# bun completions
+[ -s "/home/gio/.bun/_bun" ] && source "/home/gio/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
