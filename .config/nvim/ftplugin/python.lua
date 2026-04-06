@@ -4,10 +4,6 @@ local g = vim.g
 local o = vim.o
 local opt = vim.opt
 
--- Folding options
-opt.foldmethod = 'indent'
-opt.foldnestmax = 2
-
 -- Change fold colors
 -- vim.cmd(':highlight Folded guibg=Gray guifg=DarkRed')
 

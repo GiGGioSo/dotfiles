@@ -1,19 +1,8 @@
 Utils = require("utils")
 
-local g = vim.g
-local o = vim.o
-local opt = vim.opt
+vim.opt.colorcolumn = "80"
 
--- Folding options
-opt.foldmethod = 'indent'
-opt.foldnestmax = 2
-
--- Change fold colors
--- vim.cmd(':highlight Folded guibg=Gray guifg=DarkRed')
-
-opt.colorcolumn = "80"
-
-opt.makeprg = "./build.sh"
+vim.opt.makeprg = "./build.sh"
 
 vim.keymap.set('n', '<leader>k',
     function() Utils.search_in_zeal("cpp") end,
