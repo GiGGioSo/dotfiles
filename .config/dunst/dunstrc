@@ -33,7 +33,7 @@
     origin = top-right
 
     # Offset from the origin
-    offset = 6x38
+    offset = (6, 38)
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 0
@@ -404,6 +404,7 @@
     alignment = center
     format = "<b>%s</b>"
     icon_position = top
+    width = (200, 200) # if the volume notification appears on top of another (bigger) notification, then it will use its same width
 
 ### End of my rules ###
 

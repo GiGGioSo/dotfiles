@@ -150,7 +150,7 @@ keys = [
         lazy.widget["genpollcommand"].force_update(),
         desc="Decrease screen backlight"),
     # Rotate screen
-    Key([], "XF86Launch2", lazy.spawn(f"{home}/.local/scripts/screen/rotate_screen.sh"), desc="Rotate the screen"),
+    Key([], "XF86RotateWindows", lazy.spawn(f"{home}/.local/scripts/screen/rotate_screen.sh"), desc="Rotate the screen"),
     # Screenshot utility
     Key([], "Print", lazy.spawn("flameshot gui"), desc="Screenshot utility"),
     # Toggle touchpad
@@ -159,6 +159,11 @@ keys = [
     Key([mod, "shift"], "p", lazy.spawn(f"{home}/.local/scripts/pick_color.sh"), desc="Pick color from the screen"),
     # Change keyboard layout
     Key([alt], "k", lazy.spawn(f"{home}/.local/scripts/change_kb_layout.sh"), desc="Change keyboard layout"),
+    # Global media controls
+    Key([mod, "control"], "Right", lazy.spawn("playerctl -p spotify next"), desc="Skip to next track"),
+    Key([mod, "control"], "Left", lazy.spawn("playerctl -p spotify previous"), desc="Skip to previous track"),
+    Key([mod, "control"], "Return", lazy.spawn("playerctl -p spotify play-pause"), desc="Play pause current track"),
+    # Key([mod, "control"], "i", lazy.spawn("notify-send \"`playerctl -p spotify metadata -f '{{artist}} - {{title}}'`\""), desc="Show currently playing track info"), ## Doesnt work. the playerctl command is not evaluated
 ]
 groups = [Group(i) for i in "123456789"]
 
@@ -276,6 +281,18 @@ screens = [
                 #         ),
                 #         separator_widget(colors[1], colors[4]),
                 #     ]
+                # ),
+                # separator_widget(colors[3], colors[0]),
+                # widget.GenPollCommand(
+                #     cmd="playerctl metadata -f '{{emoji(status)}} [{{playerName}}] ({{artist}}) {{title}}'",
+                #     fmt="{}",
+                #     shell=True,
+                #     update_interval=0.5,
+                #     background=colors[3],
+                #     # mouse_callbacks = {
+                #     #     'Button4': increase_backlight_callback,
+                #     #     'Button5': decrease_backlight_callback,
+                #     # },
                 # ),
                 separator_widget(colors[4], colors[0]),
                 widget.GenPollCommand(
